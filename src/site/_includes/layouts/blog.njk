@@ -2,60 +2,143 @@
 <html class="no-js" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>{%- if title -%}{{ title }}{%- else -%}Rafa's website{%- endif -%}</title>
-    <meta name="description" content="{%- if description -%}{{ description }}{%- else -%}Personal website of Rafael Conde{%- endif -%}">
-    <meta name="author" content="Rafael Conde">
-    <meta name="viewport" content="initial-scale=1.0" />
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    {% if stylesheet %}
-    <link rel="stylesheet" href="/css/{{ stylesheet }}"/>
-    {% else %}
+    <title>{%- if title -%}{{ title }} | Amey Ambade{%- else -%}Blog | Amey Ambade{%- endif -%}</title>
+    <meta name="description" content="{%- if description -%}{{ description }}{%- else -%}Blog post by Amey Ambade{%- endif -%}">
+    <meta name="author" content="Amey Ambade">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Theme color -->
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{%- if title -%}{{ title }} | Amey Ambade{%- else -%}Blog | Amey Ambade{%- endif -%}">
+    <meta property="og:description" content="{%- if description -%}{{ description }}{%- else -%}Blog post by Amey Ambade{%- endif -%}">
+    <meta property="og:type" content="article">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <!-- Preload fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="/css/blogpost.css"/>
-    {% endif %}
+
+    <!-- Theme script -->
+    <script>
+      (function() {
+        const stored = localStorage.getItem('theme');
+        if (stored) {
+          document.documentElement.setAttribute('data-theme', stored);
+        }
+      })();
+    </script>
   </head>
-  <body>
+  <body class="paper-texture">
+    <!-- Reading Progress Bar -->
+    <div class="progress-bar" aria-hidden="true">
+      <div class="progress-bar__fill"></div>
+    </div>
 
-    <div class="header">
-      <a href="/">
-        <svg width="12px" height="10px" viewBox="0 0 12 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <g id="back-arrow">
-                    <path d="M8.58494617,5.99388911 L0.998890097,5.99388911 C0.44721833,5.99388911 0,5.54667078 0,4.99499901 C0,4.44332725 0.44721833,3.99610892 0.998890097,3.99610892 L8.58651723,3.99610892 L6.7871067,2.19669839 C6.39701586,1.80660755 6.39701586,1.17414532 6.7871067,0.784054471 C7.17719755,0.393963623 7.80965978,0.393963623 8.19975063,0.784054471 L11.659304,4.24360779 C11.8681431,4.42669167 12,4.69544693 12,4.99499901 C12,5.30001297 11.8632909,5.5730968 11.6478039,5.75631922 L8.19975063,9.2043725 C7.80965978,9.59446335 7.17719755,9.59446335 6.7871067,9.2043725 C6.39701586,8.81428165 6.39701586,8.18181943 6.7871067,7.79172858 L8.58494617,5.99388911 Z" id="arrow" transform="translate(6.000000, 4.994213) scale(-1, 1) translate(-6.000000, -4.994213) "></path>
-                </g>
-            </g>
+    <!-- Header -->
+    <header class="blog-header">
+      <a href="/" class="back-link">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.415 5.994H11.001c.552 0 1-.447 1-1s-.448-1-1-1H3.414l1.8-1.8a1 1 0 0 0-1.414-1.414L.341 4.244A1.003 1.003 0 0 0 0 5c0 .305.137.578.352.761l3.448 3.448a1 1 0 0 0 1.414-1.414L3.415 5.994z" fill="currentColor"/>
         </svg>
-        Back to Rafa's website
+        <span>Back to home</span>
       </a>
-      {% if video %}
-        <a href="{{video}}" target="_blank" class="pull-right">
-          <svg width="8px" height="10px" viewBox="0 0 8 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <g id="video-icon" transform="translate(-3.000000, -2.000000)">
-                      <path d="M3.25773455,2.33324116 C3.61374998,1.82932716 4.12907501,1.95277923 4.67037847,2.33324116 L10.1299318,5.79279448 C10.338771,5.97587836 10.4706278,6.24463362 10.4706278,6.5441857 C10.4706278,6.84919966 10.3339187,7.12228349 10.1184318,7.30550591 L4.67037847,10.7535592 C4.15881127,11.0216192 3.5887846,11.2357025 3.25773455,10.7535592 C2.9266845,10.2714158 2.90171911,2.83715516 3.25773455,2.33324116 Z" id="play"></path>
-                  </g>
-              </g>
-          </svg>
-        </a>
+
+      <!-- Theme Toggle -->
+      <button class="theme-toggle theme-toggle--small" aria-label="Toggle dark mode">
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Article -->
+    <article class="blog-article">
+      <div class="article-header">
+        {% if category %}
+        <span class="article-category tag tag--{{ category }}">{{ category }}</span>
+        {% endif %}
+        <h1 class="article-title">{{ title }}</h1>
+        <div class="article-meta">
+          <time class="article-date" datetime="{{ date | date: '%Y-%m-%d' }}">
+            {{ date | friendlyDate }}
+          </time>
+          {% if updated %}
+          <span class="article-updated">
+            (Updated: {{ updated | friendlyDate }})
+          </span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="article-content prose">
+        {{ content | safe }}
+      </div>
+
+      {% if tags %}
+      <div class="article-tags">
+        {% for tag in tags %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
       {% endif %}
-    </div>
+    </article>
 
-    <div class="article">
-      <span class="date">{{ date | friendlyDate }}</span>
-      {{ content | safe }}
-    </div>
-
-    <div class="footer">
-      <a href="/">
-        <svg width="12px" height="10px" viewBox="0 0 12 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <g id="footer-back-arrow">
-                    <path d="M8.58494617,5.99388911 L0.998890097,5.99388911 C0.44721833,5.99388911 0,5.54667078 0,4.99499901 C0,4.44332725 0.44721833,3.99610892 0.998890097,3.99610892 L8.58651723,3.99610892 L6.7871067,2.19669839 C6.39701586,1.80660755 6.39701586,1.17414532 6.7871067,0.784054471 C7.17719755,0.393963623 7.80965978,0.393963623 8.19975063,0.784054471 L11.659304,4.24360779 C11.8681431,4.42669167 12,4.69544693 12,4.99499901 C12,5.30001297 11.8632909,5.5730968 11.6478039,5.75631922 L8.19975063,9.2043725 C7.80965978,9.59446335 7.17719755,9.59446335 6.7871067,9.2043725 C6.39701586,8.81428165 6.39701586,8.18181943 6.7871067,7.79172858 L8.58494617,5.99388911 Z" id="arrow" transform="translate(6.000000, 4.994213) scale(-1, 1) translate(-6.000000, -4.994213) "></path>
-                </g>
-            </g>
+    <!-- Footer -->
+    <footer class="blog-footer">
+      <a href="/" class="back-link">
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.415 5.994H11.001c.552 0 1-.447 1-1s-.448-1-1-1H3.414l1.8-1.8a1 1 0 0 0-1.414-1.414L.341 4.244A1.003 1.003 0 0 0 0 5c0 .305.137.578.352.761l3.448 3.448a1 1 0 0 0 1.414-1.414L3.415 5.994z" fill="currentColor"/>
         </svg>
-        Back to Rafa's website
+        <span>Back to home</span>
       </a>
-    </div>
+      <p class="footer-attribution">
+        &copy; {{ 'now' | friendlyDate: 'yyyy' }} Amey Ambade
+      </p>
+    </footer>
 
+    <!-- Scripts -->
+    <script>
+      // Theme toggle
+      const toggle = document.querySelector('.theme-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme') ||
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          const next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
+
+      // Progress bar
+      const progressBar = document.querySelector('.progress-bar__fill');
+      if (progressBar) {
+        window.addEventListener('scroll', () => {
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+          progressBar.style.width = `${Math.min(progress, 100)}%`;
+        });
+      }
+    </script>
   </body>
 </html>

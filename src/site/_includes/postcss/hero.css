@@ -1,132 +1,175 @@
-.big-hero-six {
+/* ==========================================================================
+   Hero Section
+   Amey Ambade's Personal Website
+   ========================================================================== */
+
+.section--hero {
+  min-height: 100vh;
   display: flex;
-  position: absolute;
-  height: 600px;
-  top: 0px;
-  background: white;
-  z-index: 1;
-  margin-bottom: 64px;
-
-  p {
-    margin: 0;
-
-    &:first-of-type {
-      position: relative;
-      left: 3px;
-    }
-
-    &:last-of-type {
-      position: relative;
-      left: 3px;
-      top: 4px;
-
-      @media (minx-width: 520px) {
-        top: 8px;
-      }
-    }
-  }
-
-  .background {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    max-width: 1440px;
-    margin: auto;
-    background: #fff;
-    bottom: -164px;
-    z-index: 2;
-    overflow: hidden;
-  }
-
-  .main-content-wrapper {
-    align-items: center;
-    justify-content: flex-start;
-    z-index: 3;
-  }
-
-  video {
-    position: relative;
-    z-index: 1;
-    width: 101%;
-    flex: none;
-    background: linear-gradient(to top, #FFA000, #FFA000 25% , #fff 25%, #fff 25%);
-    opacity: 0.99 // Helps with blending the video with the section below
-  }
-  
-  .custom-wave {
-    display: block;
-    position: absolute;
-    z-index: 1;
-    top: 445px;
-    width: 100vw;
-    height: 400px;
-    background: #FFA000;
-    
-    path,
-    rect {
-      fill: white;
-      }
-    }
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-24) 0;
+  background: var(--bg-primary);
 }
 
-.memoji {
-  display: none;
-  height: 60px;
-  margin-right: 10px;
+.hero-content {
+  max-width: 720px;
 }
 
-#unecessary-part-of-name {
-  animation: 10s ease-in-out 1s fade-away;
-  animation-fill-mode: forwards;
+.hero-greeting {
+  font-size: var(--text-lg);
+  color: var(--accent-primary);
+  margin: 0 0 var(--space-2) 0;
+  font-weight: 500;
 }
 
-@keyframes fade-away {
-  from { opacity: 1; }
-  to { opacity: 0.1; }
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-7xl);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 0 0 var(--space-4) 0;
+  color: var(--text-primary);
+
+  /* Gradient text effect - optional, uncomment to enable
+  background: linear-gradient(
+    135deg,
+    var(--accent-primary),
+    var(--accent-secondary)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  */
 }
 
-/* Some switcharoos on what to show on the hero, depending on the size */
-
-@media (max-width: 780px) {
-  .big-hero-six {
-    color: #0e1e25;
-    z-index: 2;
-   
-    .background {
-      background: #fff;
-   }
-   
-   .custom-wave {
-     display: none;
-   }
- }
+.hero-tagline {
+  font-size: var(--text-2xl);
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-6) 0;
+  line-height: var(--leading-relaxed);
 }
 
-@media (max-width: 900px) {
-  
-  .big-hero-six .background {
-    bottom: -64px;
+.hero-description {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-8) 0;
+  max-width: 600px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-base);
+  font-weight: 500;
+  text-decoration: none;
+
+  border-radius: var(--border-radius-lg);
+  border: 2px solid transparent;
+
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--primary {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+.btn--primary:hover {
+  background: var(--accent-secondary);
+  border-color: var(--accent-secondary);
+  box-shadow: 0 4px 12px rgba(var(--accent-primary-rgb), 0.3);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-secondary);
+}
+
+.btn--secondary:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* Dark mode button adjustments */
+[data-theme="dark"] .btn--secondary {
+  border-color: var(--border-secondary);
+}
+
+[data-theme="dark"] .btn--secondary:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* ==========================================================================
+   Responsive Hero
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .section--hero {
+    min-height: auto;
+    padding: var(--space-16) 0;
+  }
+
+  .hero-title {
+    font-size: var(--text-5xl);
+  }
+
+  .hero-tagline {
+    font-size: var(--text-xl);
+  }
+
+  .hero-description {
+    font-size: var(--text-base);
   }
 }
 
-@media (max-width: 624px) {
-  .big-hero-six h1 {
-    font-size: 11vw;
-  }
-}
-
-@media (max-width: 520px) {
-  
-  .big-hero-six .main-content-wrapper {
-    align-items: center;
-    justify-content: flex-start;
-    font-size: 16px;
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: var(--text-4xl);
   }
 
-  .big-hero-six h1 {
-    font-size: 42px;
-    margin: 4px 0 4px 0;
+  .hero-tagline {
+    font-size: var(--text-lg);
+  }
+
+  .hero-cta {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
   }
 }

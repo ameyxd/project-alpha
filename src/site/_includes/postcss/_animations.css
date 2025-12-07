@@ -1,0 +1,253 @@
+/* ==========================================================================
+   Animation System
+   Amey Ambade's Personal Website
+
+   Scroll-triggered animations using CSS classes applied via Intersection Observer
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   Base Animation Setup
+   Elements start hidden and animate in when .is-visible is added
+   ------------------------------------------------------------------------- */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--transition-slower) var(--ease-out-expo),
+    transform var(--transition-slower) var(--ease-out-expo);
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -------------------------------------------------------------------------
+   Animation Variants
+   Different entrance animations
+   ------------------------------------------------------------------------- */
+
+/* Fade in only (no movement) */
+.animate-fade {
+  opacity: 0;
+  transition: opacity var(--transition-slower) var(--ease-out-expo);
+}
+
+.animate-fade.is-visible {
+  opacity: 1;
+}
+
+/* Slide up (default) */
+.animate-slide-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity var(--transition-slower) var(--ease-out-expo),
+    transform var(--transition-slower) var(--ease-out-expo);
+}
+
+.animate-slide-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slide in from left */
+.animate-slide-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition:
+    opacity var(--transition-slower) var(--ease-out-expo),
+    transform var(--transition-slower) var(--ease-out-expo);
+}
+
+.animate-slide-left.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Slide in from right */
+.animate-slide-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition:
+    opacity var(--transition-slower) var(--ease-out-expo),
+    transform var(--transition-slower) var(--ease-out-expo);
+}
+
+.animate-slide-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale up */
+.animate-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity var(--transition-slower) var(--ease-out-expo),
+    transform var(--transition-slower) var(--ease-out-back);
+}
+
+.animate-scale.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* -------------------------------------------------------------------------
+   Staggered Animations
+   For lists of items that animate in sequence
+   ------------------------------------------------------------------------- */
+.stagger-container .animate-on-scroll,
+.stagger-container .animate-slide-up {
+  /* Children will have delay added via JS or nth-child */
+}
+
+.stagger-container > *:nth-child(1) { transition-delay: 0ms; }
+.stagger-container > *:nth-child(2) { transition-delay: 50ms; }
+.stagger-container > *:nth-child(3) { transition-delay: 100ms; }
+.stagger-container > *:nth-child(4) { transition-delay: 150ms; }
+.stagger-container > *:nth-child(5) { transition-delay: 200ms; }
+.stagger-container > *:nth-child(6) { transition-delay: 250ms; }
+.stagger-container > *:nth-child(7) { transition-delay: 300ms; }
+.stagger-container > *:nth-child(8) { transition-delay: 350ms; }
+.stagger-container > *:nth-child(9) { transition-delay: 400ms; }
+.stagger-container > *:nth-child(10) { transition-delay: 450ms; }
+
+/* -------------------------------------------------------------------------
+   Hover Animations
+   Reusable hover effects
+   ------------------------------------------------------------------------- */
+
+/* Lift on hover */
+.hover-lift {
+  transition: transform var(--transition-fast) var(--ease-out-expo);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Scale on hover */
+.hover-scale {
+  transition: transform var(--transition-fast) var(--ease-out-expo);
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+/* Glow on hover */
+.hover-glow {
+  transition: box-shadow var(--transition-fast);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(var(--accent-primary-rgb), 0.3);
+}
+
+/* -------------------------------------------------------------------------
+   Loading Animations
+   For async content or page transitions
+   ------------------------------------------------------------------------- */
+
+/* Pulse */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Spin */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Skeleton loading */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary) 0%,
+    var(--bg-secondary) 50%,
+    var(--bg-tertiary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--border-radius-sm);
+}
+
+/* -------------------------------------------------------------------------
+   Special Effects
+   ------------------------------------------------------------------------- */
+
+/* Floating animation (for decorative elements) */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Gradient text animation */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--accent-primary),
+    var(--accent-secondary),
+    var(--accent-primary)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* -------------------------------------------------------------------------
+   Reduced Motion
+   Disable animations for users who prefer reduced motion
+   ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll,
+  .animate-fade,
+  .animate-slide-up,
+  .animate-slide-left,
+  .animate-slide-right,
+  .animate-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .animate-pulse,
+  .animate-spin,
+  .animate-float,
+  .skeleton {
+    animation: none;
+  }
+
+  .hover-lift:hover,
+  .hover-scale:hover {
+    transform: none;
+  }
+}

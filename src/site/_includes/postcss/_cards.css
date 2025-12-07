@@ -1,0 +1,287 @@
+/* ==========================================================================
+   Section Cards System
+   Amey Ambade's Personal Website
+
+   Card-based layout for organizing content sections
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   Section Container
+   Full-width section wrapper
+   ------------------------------------------------------------------------- */
+.section {
+  position: relative;
+  width: 100%;
+  padding: var(--space-16) 0;
+  background: var(--bg-primary);
+}
+
+.section:first-of-type {
+  padding-top: var(--space-24);
+}
+
+.section:last-of-type {
+  padding-bottom: var(--space-24);
+}
+
+/* Alternate background for visual rhythm */
+.section--alt {
+  background: var(--bg-secondary);
+}
+
+/* -------------------------------------------------------------------------
+   Section Inner Container
+   Constrains content width and centers it
+   ------------------------------------------------------------------------- */
+.section__inner {
+  width: 90%;
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+}
+
+.section__inner--wide {
+  max-width: var(--max-width-wide);
+}
+
+.section__inner--narrow {
+  max-width: var(--max-width-prose);
+}
+
+/* -------------------------------------------------------------------------
+   Section Header
+   Title and description for each section
+   ------------------------------------------------------------------------- */
+.section__header {
+  margin-bottom: var(--space-12);
+}
+
+.section__title {
+  margin-bottom: var(--space-4);
+}
+
+.section__description {
+  max-width: var(--max-width-prose);
+  color: var(--text-secondary);
+}
+
+/* Centered header variant */
+.section__header--center {
+  text-align: center;
+}
+
+.section__header--center .section__description {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* -------------------------------------------------------------------------
+   Section Card
+   Individual content card within a section
+   ------------------------------------------------------------------------- */
+.section-card {
+  position: relative;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-card);
+
+  transition:
+    transform var(--transition-base) var(--ease-out-expo),
+    box-shadow var(--transition-base);
+}
+
+.section-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Card without hover effect */
+.section-card--static {
+  cursor: default;
+}
+
+.section-card--static:hover {
+  transform: none;
+  box-shadow: var(--shadow-card);
+}
+
+/* Card sizes */
+.section-card--sm {
+  padding: var(--space-6);
+}
+
+.section-card--lg {
+  padding: var(--space-12);
+}
+
+/* -------------------------------------------------------------------------
+   Card Header
+   ------------------------------------------------------------------------- */
+.card__header {
+  margin-bottom: var(--space-6);
+}
+
+.card__eyebrow {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-primary);
+  margin-bottom: var(--space-2);
+}
+
+.card__title {
+  margin-bottom: var(--space-2);
+}
+
+.card__subtitle {
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+}
+
+/* -------------------------------------------------------------------------
+   Card Content
+   ------------------------------------------------------------------------- */
+.card__content {
+  color: var(--text-secondary);
+}
+
+.card__content > * + * {
+  margin-top: var(--space-4);
+}
+
+/* -------------------------------------------------------------------------
+   Card Footer
+   ------------------------------------------------------------------------- */
+.card__footer {
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-primary);
+}
+
+/* -------------------------------------------------------------------------
+   Card Grid Layouts
+   Different arrangements for cards
+   ------------------------------------------------------------------------- */
+.card-grid {
+  display: grid;
+  gap: var(--space-8);
+}
+
+/* Two column grid */
+.card-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Three column grid */
+.card-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Auto-fit grid (responsive) */
+.card-grid--auto {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 768px) {
+  .card-grid--2,
+  .card-grid--3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Featured Card
+   Larger, more prominent card
+   ------------------------------------------------------------------------- */
+.section-card--featured {
+  padding: var(--space-12);
+  background: linear-gradient(
+    135deg,
+    var(--bg-secondary) 0%,
+    var(--bg-tertiary) 100%
+  );
+  border: 2px solid var(--accent-primary);
+}
+
+.section-card--featured .card__eyebrow {
+  color: var(--accent-secondary);
+}
+
+/* -------------------------------------------------------------------------
+   Link Card
+   Card that acts as a link
+   ------------------------------------------------------------------------- */
+a.section-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+a.section-card .card__title {
+  transition: color var(--transition-fast);
+}
+
+a.section-card:hover .card__title {
+  color: var(--accent-primary);
+}
+
+/* -------------------------------------------------------------------------
+   Icon Card
+   Card with an icon or image
+   ------------------------------------------------------------------------- */
+.section-card--icon {
+  padding-top: var(--space-12);
+}
+
+.card__icon {
+  position: absolute;
+  top: calc(-1 * var(--space-6));
+  left: var(--space-8);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+
+  background: var(--accent-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.card__icon svg {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+/* -------------------------------------------------------------------------
+   Compact Card
+   Minimal card for lists
+   ------------------------------------------------------------------------- */
+.section-card--compact {
+  padding: var(--space-4) var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.section-card--compact .card__content {
+  flex: 1;
+}
+
+/* -------------------------------------------------------------------------
+   Card Accent Colors
+   Optional accent border/highlight
+   ------------------------------------------------------------------------- */
+.section-card--accent-primary {
+  border-left: 4px solid var(--accent-primary);
+}
+
+.section-card--accent-secondary {
+  border-left: 4px solid var(--accent-secondary);
+}

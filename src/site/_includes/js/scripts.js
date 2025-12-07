@@ -1,221 +1,223 @@
-function meetingSomeone() {
+/**
+ * Amey Ambade's Personal Website
+ * Main JavaScript functionality
+ */
 
-	var ticks = document.querySelectorAll (".tick");
-	var rafa = document.getElementById('easterNope');
+(function() {
+  'use strict';
 
-	for (var i = 0; i < ticks.length; ++i) {
-		var tick = ticks[i];
-		popout = function() {
-			rafa.className = 'popout';
-		}
-		tick.onclick = function() {
-			rafa.className = 'popin';
-			console.log('If you can make this happen though, or if you are this person, lets TALK ON TWITTER;');
-			setTimeout(popout, 3000);
-		}
-	}
-}
+  // ==========================================================================
+  // Theme Toggle
+  // Handles dark/light mode switching with system preference detection
+  // ==========================================================================
 
-meetingSomeone();
+  const themeToggle = document.querySelector('.theme-toggle');
 
-// Dynamically change theme-color on scroll
-// It's looking for a "data-theme-color" attribute in the HTML to define it as a section
-var theme = document.querySelector('meta[name="theme-color"]'),
-sections = document.querySelectorAll("[data-theme-color]"),
-currentThemeColor = "rgb(255,255,255)";
+  function getSystemTheme() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
 
-const options = {
-	// These values make the intersecting area just the top part of the viewport
-	// I only want to change the theme-color when a section hits the top
-	// Given the unreliable nature of my stupid page layout, with the waves and such, it's not a straight forward approach and requires some manual tweaking until it "feels" right
-	threshold: 0.1,
-	rootMargin: "10% 0px -90% 0px"
-};
+  function getStoredTheme() {
+    return localStorage.getItem('theme');
+  }
 
-// Creates an Observer for all the sections and triggers the color change when it intersects
-const observer = new IntersectionObserver(function(entries, observer) {
-	entries.forEach(entry => {
-		if (entry.isIntersecting) {
- 		var color = entry.target.getAttribute('data-theme-color');
- 		startColorFade(60, 0.3, currentThemeColor, color);
-		}
-	});
-}, options);
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }
 
-// Fire the observers up and let them go wild
-sections.forEach(section => {
-	observer.observe(section);
-})
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') || getSystemTheme();
+    const next = current === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+  }
 
-// Here's the code to transition/animate the color change — it's a lot.
-// TL;DR, we have to calculate each "frame" and update the <meta> tag as you go.
-// This was remixed from a Stack Overflow answer by the user "ffdigital"
-// https://stackoverflow.com/a/38381724/4746353
+  // Initialize theme toggle
+  if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+  }
 
-function startColorFade(fps, duration, currentColor, targetColor) {
-	var stop = false;
-	var fpsInterval = 1000 / fps;
-	var now;
-	var then = Date.now();
-	var elapsed;
-	var startTime = then;
-	var currentColorArray = getElementBG(currentColor);
-	var targetColorArray	= getElementBG(targetColor);
-	var distance = calculateDistance(currentColorArray, targetColorArray);
-	var increment = calculateIncrement(distance, fps, duration);
-	animateColor(duration, currentColorArray, targetColorArray, increment, stop, fpsInterval, now, then, elapsed, startTime);
-}
-
-function animateColor( duration, currentColorArray, targetColorArray, increment, stop, fpsInterval, now, then, elapsed, startTime ) {
-	var step = function() {
-		if (stop) {
-			return;
-		}
-		// Request another frame
-		requestAnimationFrame(function() { //arguments can passed on the callback by an anonymous function
-			animateColor(duration, currentColorArray, targetColorArray, increment, stop, fpsInterval, now, then, elapsed, startTime);
-			colorTransition( currentColorArray, targetColorArray, increment);
-		});
-
-		// Calculate the elapsed time since last loop
-		now = Date.now();
-		elapsed = now - then;
-
-    // If enough time has elapsed, draw the next frame
-    if (elapsed > fpsInterval) {
-      // Get ready for next frame by setting then=now, but...
-      // Also, adjust for fpsInterval not being multiple of 16.67
-      then = now - (elapsed % fpsInterval);
-      var sinceStart = now - startTime;
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    // Only update if user hasn't explicitly set a preference
+    if (!getStoredTheme()) {
+      document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
     }
+  });
 
-    if (sinceStart / 1000 * 100 >= duration * 100) {
-      stop = true;
-      // Update the currentThemeColor for the next transition
-      currentThemeColor = "rgb(" + currentColorArray + ")";
+  // ==========================================================================
+  // Reading Progress Bar
+  // Shows scroll progress at the top of the page
+  // ==========================================================================
+
+  const progressBar = document.querySelector('.progress-bar__fill');
+
+  function updateProgressBar() {
+    if (!progressBar) return;
+
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+    progressBar.style.width = `${Math.min(progress, 100)}%`;
+  }
+
+  // Throttle scroll events for performance
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        updateProgressBar();
+        ticking = false;
+      });
+      ticking = true;
     }
-	}
+  });
 
-  step();
-}
+  // Initial update
+  updateProgressBar();
 
-function colorTransition(currentColorArray, targetColorArray, increment) {
+  // ==========================================================================
+  // Scroll Animations
+  // Reveals elements as they enter the viewport
+  // ==========================================================================
 
-  // Checking R (from RGB)
-	if (currentColorArray[0] > targetColorArray[0]) {
-    currentColorArray[0] -= increment[0];
+  const animatedElements = document.querySelectorAll('.animate-on-scroll, .animate-fade, .animate-slide-up, .animate-slide-left, .animate-slide-right, .animate-scale');
 
-    if (currentColorArray[0] <= targetColorArray[0]) {
-      increment[0] = 0;
-		}
-	} else {
-		currentColorArray[0] += increment[0];
+  if (animatedElements.length > 0 && 'IntersectionObserver' in window) {
+    const animationObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            // Optionally stop observing after animation
+            // animationObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
 
-    if (currentColorArray[0] >= targetColorArray[0]) {
-			increment[0] = 0;
-		}
-	}
+    animatedElements.forEach((el) => {
+      animationObserver.observe(el);
+    });
+  } else {
+    // Fallback: show all elements immediately
+    animatedElements.forEach((el) => {
+      el.classList.add('is-visible');
+    });
+  }
 
-  // Checking G (from RGB)
-	if (currentColorArray[1] > targetColorArray[1]) {
-    currentColorArray[1] -= increment[1];
+  // ==========================================================================
+  // Bucket List Interactivity
+  // Handles checkbox animations and state
+  // ==========================================================================
 
-		if (currentColorArray[1] <= targetColorArray[1]) {
-			increment[1] = 0;
-		}
-	} else {
-		currentColorArray[1] += increment[1];
+  const bucketItems = document.querySelectorAll('.bucket-item');
 
-    if (currentColorArray[1] >= targetColorArray[1]) {
-			increment[1] = 0;
-		}
-	}
+  bucketItems.forEach((item) => {
+    const checkbox = item.querySelector('input[type="checkbox"]');
 
-	// Checking B (from RGB)
-	if (currentColorArray[2] > targetColorArray[2]) {
-		currentColorArray[2] -= increment[2];
+    if (checkbox) {
+      // Update item state based on checkbox
+      const updateItemState = () => {
+        if (checkbox.checked) {
+          item.classList.add('bucket-item--checked');
+        } else {
+          item.classList.remove('bucket-item--checked');
+        }
+      };
 
-  	if (currentColorArray[2] <= targetColorArray[2]) {
-			increment[2] = 0;
-		}
-	} else {
-		currentColorArray[2] += increment[2];
+      checkbox.addEventListener('change', updateItemState);
+      updateItemState(); // Initial state
+    }
+  });
 
-		if (currentColorArray[2] >= targetColorArray[2]) {
-			increment[2] = 0;
-		}
-	}
+  // ==========================================================================
+  // Smooth Scroll for Anchor Links
+  // ==========================================================================
 
-  // Apply the new modified color
-	theme.setAttribute("content", "rgb(" + currentColorArray + ")");
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
 
-}
+      if (targetId === '#') return;
 
-function getElementBG(elmBGColor) {
-  var bg	= elmBGColor; // i.e: RGB(255, 0, 0)
-			bg	= bg.match(/\((.*)\)/)[1];
-			bg	= bg.split(",");
+      const target = document.querySelector(targetId);
 
-  for (var i = 0; i < bg.length; i++) {
-		bg[i] = parseInt(bg[i], 10);
-	}
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
 
-  if (bg.length > 3) { bg.pop(); }
+        // Update URL without jumping
+        history.pushState(null, null, targetId);
+      }
+    });
+  });
 
-  return bg; // return array
-}
+  // ==========================================================================
+  // Section Cards Animation
+  // Stagger animation for card grids
+  // ==========================================================================
 
-function calculateDistance(colorArray1, colorArray2) {
-	var distance = [];
+  const staggerContainers = document.querySelectorAll('.stagger-container');
 
-  for (var i = 0; i < colorArray1.length; i++) {
-		distance.push(Math.abs(colorArray1[i] - colorArray2[i]));
-	}
+  staggerContainers.forEach((container) => {
+    const children = container.children;
+    Array.from(children).forEach((child, index) => {
+      child.style.transitionDelay = `${index * 50}ms`;
+    });
+  });
 
-  return distance;
-}
+  // ==========================================================================
+  // Keyboard Navigation Enhancements
+  // ==========================================================================
 
-function calculateIncrement(distanceArray, fps, duration) {
-	var increment = [];
-	for (var i = 0; i < distanceArray.length; i++) {
-		increment.push(Math.abs(Math.floor(distanceArray[i] / (fps * duration))));
+  // Focus visible polyfill-like behavior
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      document.body.classList.add('user-is-tabbing');
+    }
+  });
 
-		if (increment[i] == 0) {
-			increment[i]++;
-		}
-	}
+  document.addEventListener('mousedown', () => {
+    document.body.classList.remove('user-is-tabbing');
+  });
 
-	return increment;
-}
+  // ==========================================================================
+  // Reduced Motion Detection
+  // ==========================================================================
 
-// Mute/unmute video on hover
-const video = document.getElementById('thwip-video');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-video.addEventListener('mouseover', function() {
-	video.muted = false;
-});
+  function handleReducedMotion() {
+    if (prefersReducedMotion.matches) {
+      // Disable scroll behavior smooth
+      document.documentElement.style.scrollBehavior = 'auto';
+    } else {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }
+  }
 
-video.addEventListener('mouseout', function() {
-	video.muted = true;
-});
+  prefersReducedMotion.addEventListener('change', handleReducedMotion);
+  handleReducedMotion();
 
-// Spatialty Coffee Parallax Effect
-const degrees = 8;
-const element = document.querySelector('.appIcon');
+  // ==========================================================================
+  // Theme Preview via URL Parameter (for testing)
+  // Usage: ?theme=dark or ?theme=light
+  // ==========================================================================
 
-const onPointerMove = (pointer) => {
-  const icon = element.getBoundingClientRect();
-  const halfSize = icon.width / 2;
+  const urlParams = new URLSearchParams(window.location.search);
+  const themeParam = urlParams.get('theme');
 
-  const xDist = minMaxValue(-(icon.x - pointer.x + halfSize), -halfSize, halfSize);
-  const yDist = minMaxValue(icon.y - pointer.y + halfSize, -halfSize, halfSize);
+  if (themeParam === 'dark' || themeParam === 'light') {
+    setTheme(themeParam);
+  }
 
-  const x = Math.round(xDist / (halfSize / 100)) / 100;
-  const y = Math.round(yDist / (halfSize / 100)) / 100;
-
-  element.style.transform = `rotateX(${y * degrees}deg) rotateY(${x * degrees}deg)`;
-};
-
-const minMaxValue = (value, min, max) => Math.min(Math.max(value, min), max);
-
-window.addEventListener('pointermove', onPointerMove);
+})();

@@ -1,0 +1,297 @@
+/* ==========================================================================
+   Typography System
+   Amey Ambade's Personal Website
+
+   Features modern serif fonts for headings (the "serif renaissance")
+   with clean sans-serif for body text and monospace for code.
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   Font Imports
+   Using Google Fonts for Newsreader (modern serif) and JetBrains Mono
+   ------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* -------------------------------------------------------------------------
+   Base Typography
+   ------------------------------------------------------------------------- */
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+}
+
+/* -------------------------------------------------------------------------
+   Headings
+   Modern serif with the "flattened" aesthetic
+   ------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: var(--text-6xl);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: var(--text-4xl);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+
+h5 {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+h6 {
+  font-size: var(--text-base);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive heading sizes */
+@media (max-width: 768px) {
+  h1 {
+    font-size: var(--text-4xl);
+  }
+
+  h2 {
+    font-size: var(--text-3xl);
+  }
+
+  h3 {
+    font-size: var(--text-xl);
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: var(--text-3xl);
+  }
+
+  h2 {
+    font-size: var(--text-2xl);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Body Text
+   ------------------------------------------------------------------------- */
+p {
+  margin: var(--space-4) 0;
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+p:first-child {
+  margin-top: 0;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+/* Lead paragraph - larger intro text */
+.lead {
+  font-size: var(--text-xl);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+}
+
+/* Small text */
+small, .small {
+  font-size: var(--text-sm);
+}
+
+/* -------------------------------------------------------------------------
+   Links
+   ------------------------------------------------------------------------- */
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-secondary);
+}
+
+/* Underlined links (for body text) */
+p a,
+.prose a {
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--accent-primary-rgb), 0.3);
+  text-underline-offset: 2px;
+  transition:
+    color var(--transition-fast),
+    text-decoration-color var(--transition-fast);
+}
+
+p a:hover,
+.prose a:hover {
+  text-decoration-color: var(--accent-primary);
+}
+
+/* External link indicator */
+a[target="_blank"]::after {
+  content: " ↗";
+  font-size: 0.75em;
+  opacity: 0.7;
+}
+
+/* -------------------------------------------------------------------------
+   Lists
+   ------------------------------------------------------------------------- */
+ul, ol {
+  margin: var(--space-4) 0;
+  padding-left: var(--space-6);
+  color: var(--text-secondary);
+}
+
+li {
+  margin: var(--space-2) 0;
+  line-height: var(--leading-relaxed);
+}
+
+li::marker {
+  color: var(--accent-primary);
+}
+
+/* -------------------------------------------------------------------------
+   Blockquotes
+   ------------------------------------------------------------------------- */
+blockquote {
+  margin: var(--space-8) 0;
+  padding: var(--space-4) var(--space-6);
+  border-left: 4px solid var(--accent-primary);
+  background: var(--bg-tertiary);
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+blockquote p {
+  margin: 0;
+}
+
+blockquote cite {
+  display: block;
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  font-style: normal;
+  color: var(--text-tertiary);
+}
+
+/* -------------------------------------------------------------------------
+   Code
+   ------------------------------------------------------------------------- */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.15em 0.4em;
+  background: var(--bg-code);
+  border-radius: var(--border-radius-sm);
+  color: var(--text-primary);
+}
+
+pre {
+  margin: var(--space-6) 0;
+  padding: var(--space-4);
+  background: var(--bg-code);
+  border-radius: var(--border-radius-lg);
+  overflow-x: auto;
+}
+
+pre code {
+  padding: 0;
+  background: none;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+/* -------------------------------------------------------------------------
+   Horizontal Rule
+   ------------------------------------------------------------------------- */
+hr {
+  margin: var(--space-12) 0;
+  border: none;
+  height: 1px;
+  background: var(--border-primary);
+}
+
+/* -------------------------------------------------------------------------
+   Selection
+   Custom text selection color
+   ------------------------------------------------------------------------- */
+::selection {
+  background: var(--selection-bg);
+  color: var(--text-primary);
+}
+
+::-moz-selection {
+  background: var(--selection-bg);
+  color: var(--text-primary);
+}
+
+/* -------------------------------------------------------------------------
+   Utility Classes
+   ------------------------------------------------------------------------- */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.font-serif { font-family: var(--font-serif); }
+.font-sans { font-family: var(--font-sans); }
+.font-mono { font-family: var(--font-mono); }
+
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-accent { color: var(--accent-primary); }
+
+.uppercase { text-transform: uppercase; letter-spacing: 0.05em; }
+.capitalize { text-transform: capitalize; }
+.lowercase { text-transform: lowercase; }
+
+/* Prose container for long-form content */
+.prose {
+  max-width: var(--max-width-prose);
+}
+
+.prose > * + * {
+  margin-top: var(--space-6);
+}

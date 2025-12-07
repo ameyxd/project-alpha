@@ -1,21 +1,21 @@
 {
-  "name": "rafaelconde",
+  "name": "heyamey",
   "version": "1.0.0",
-  "description": "Personal website of Rafael Conde",
+  "description": "Personal website of Amey Ambade - Lead Data Scientist",
   "scripts": {
     "start": "eleventy --serve",
     "build": "eleventy"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rafaelconde/rafaelconde.git"
+    "url": "git+https://github.com/ameyxd/heyamey.git"
   },
-  "author": "Rafael Conde",
+  "author": "Amey Ambade",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rafaelconde/rafaelconde/issues"
+    "url": "https://github.com/ameyxd/heyamey/issues"
   },
-  "homepage": "https://github.com/rafaelconde/rafaelconde#readme",
+  "homepage": "https://github.com/ameyxd/heyamey#readme",
   "dependencies": {
     "@11ty/eleventy": "^0.12.1",
     "autoprefixer": "^9.6.0",

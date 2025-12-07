@@ -1,0 +1,358 @@
+/* ==========================================================================
+   Signature Elements
+   Amey Ambade's Personal Website
+
+   Unique visual elements that create a distinctive identity:
+   - Paper texture (light mode)
+   - Animated checkboxes for bucket lists
+   - Reading progress bar
+   - Custom text selection
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   Paper Texture
+   Subtle grain overlay for a tactile, warm feel in light mode
+   ------------------------------------------------------------------------- */
+.paper-texture {
+  position: relative;
+}
+
+.paper-texture::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: var(--paper-texture-opacity, 1);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  opacity: 0.03;
+  z-index: 0;
+  transition: opacity var(--transition-slow);
+}
+
+/* Dark mode - disable texture */
+[data-theme="dark"] .paper-texture::before {
+  opacity: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .paper-texture::before {
+    opacity: 0;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Reading Progress Bar
+   Shows scroll progress at the top of the page
+   ------------------------------------------------------------------------- */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--progress-bar-height);
+  background: var(--bg-tertiary);
+  z-index: var(--z-sticky);
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    var(--accent-primary),
+    var(--accent-secondary)
+  );
+  transition: width 50ms linear;
+  will-change: width;
+}
+
+/* -------------------------------------------------------------------------
+   Bucket List Checkboxes
+   Custom styled checkboxes with satisfying animations
+   ------------------------------------------------------------------------- */
+.bucket-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bucket-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border-primary);
+
+  transition: opacity var(--transition-base);
+}
+
+.bucket-item:last-child {
+  border-bottom: none;
+}
+
+.bucket-item:hover {
+  opacity: 0.9;
+}
+
+/* Custom checkbox */
+.bucket-checkbox {
+  position: relative;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.bucket-checkbox input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.bucket-checkbox__box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  border: 2px solid var(--border-secondary);
+  border-radius: var(--border-radius-sm);
+  background: var(--bg-secondary);
+
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast) var(--ease-out-back);
+}
+
+/* Checkmark */
+.bucket-checkbox__check {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+
+  transform: translate(-50%, -60%) rotate(-45deg) scale(0);
+  opacity: 0;
+
+  transition:
+    transform var(--transition-fast) var(--ease-out-back),
+    opacity var(--transition-fast);
+}
+
+/* Checked state */
+.bucket-checkbox input:checked + .bucket-checkbox__box {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  transform: scale(1.1);
+  animation: checkbox-pop 400ms var(--ease-out-back);
+}
+
+.bucket-checkbox input:checked + .bucket-checkbox__box .bucket-checkbox__check {
+  transform: translate(-50%, -60%) rotate(-45deg) scale(1);
+  opacity: 1;
+}
+
+/* Focus state */
+.bucket-checkbox input:focus-visible + .bucket-checkbox__box {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Checkbox pop animation */
+@keyframes checkbox-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1.1); }
+}
+
+/* Bucket item content */
+.bucket-content {
+  flex: 1;
+}
+
+.bucket-label {
+  display: block;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.bucket-item--checked .bucket-label {
+  color: var(--text-secondary);
+  text-decoration: line-through;
+  text-decoration-color: var(--accent-primary);
+}
+
+.bucket-link {
+  display: inline-block;
+  font-size: var(--text-sm);
+  color: var(--accent-primary);
+  margin-top: var(--space-1);
+}
+
+.bucket-link::before {
+  content: "→ ";
+}
+
+/* -------------------------------------------------------------------------
+   Bucket List Variants
+   Different styles for different list types
+   ------------------------------------------------------------------------- */
+
+/* Skills variant - with progress indicator */
+.bucket-list--skills .bucket-item {
+  flex-wrap: wrap;
+}
+
+.bucket-progress {
+  width: 100%;
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: var(--border-radius-full);
+  margin-top: var(--space-2);
+  overflow: hidden;
+}
+
+.bucket-progress__fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--accent-primary),
+    var(--accent-secondary)
+  );
+  border-radius: var(--border-radius-full);
+  transition: width var(--transition-slow) var(--ease-out-expo);
+}
+
+/* Places variant - with emoji flags */
+.bucket-list--places .bucket-item::before {
+  content: attr(data-flag);
+  font-size: var(--text-xl);
+  margin-right: var(--space-2);
+}
+
+/* -------------------------------------------------------------------------
+   Hover Link Effect
+   Animated underline for links
+   ------------------------------------------------------------------------- */
+.link-animated {
+  position: relative;
+  text-decoration: none;
+}
+
+.link-animated::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-primary);
+
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--transition-base) var(--ease-out-expo);
+}
+
+.link-animated:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* -------------------------------------------------------------------------
+   Accent Divider
+   Gradient line divider
+   ------------------------------------------------------------------------- */
+.divider-accent {
+  height: 4px;
+  border: none;
+  background: linear-gradient(
+    90deg,
+    var(--accent-primary),
+    var(--accent-secondary)
+  );
+  border-radius: var(--border-radius-full);
+  margin: var(--space-12) auto;
+  max-width: 100px;
+}
+
+/* -------------------------------------------------------------------------
+   Tag/Badge Styles
+   For categories, labels, etc.
+   ------------------------------------------------------------------------- */
+.tag {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-radius: var(--border-radius-full);
+
+  transition: all var(--transition-fast);
+}
+
+.tag--primary {
+  background: rgba(var(--accent-primary-rgb), 0.1);
+  color: var(--accent-primary);
+}
+
+.tag--secondary {
+  background: rgba(var(--accent-secondary-rgb), 0.1);
+  color: var(--accent-secondary);
+}
+
+/* -------------------------------------------------------------------------
+   Tooltip
+   Simple tooltip for additional info
+   ------------------------------------------------------------------------- */
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  border-radius: var(--border-radius-md);
+
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-fast),
+    visibility var(--transition-fast);
+
+  z-index: var(--z-tooltip);
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
