@@ -78,7 +78,7 @@
         {% endif %}
         <h1 class="article-title">{{ title }}</h1>
         <div class="article-meta">
-          <time class="article-date" datetime="{{ date | date: '%Y-%m-%d' }}">
+          <time class="article-date" datetime="{{ date | friendlyDate('yyyy-MM-dd') }}">
             {{ date | friendlyDate }}
           </time>
           {% if updated %}
@@ -111,7 +111,7 @@
         <span>Back to home</span>
       </a>
       <p class="footer-attribution">
-        &copy; {{ 'now' | friendlyDate: 'yyyy' }} Amey Ambade
+        &copy; 2024 Amey Ambade
       </p>
     </footer>
 
