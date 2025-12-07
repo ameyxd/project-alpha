@@ -1,27 +1,45 @@
-# Rafa's site
+# Amey Ambade's Personal Website
 
-This is the repo for my personal website 👋
+Personal website for Amey Ambade, Lead Data Scientist.
+
+Built with [11ty (Eleventy)](https://www.11ty.dev/) and inspired by [Rafael Conde's portfolio](https://rafa.design).
+
+## Features
+
+- Technical blog (data science, opinions, hobbies)
+- Publications & research showcase
+- Open source contributions
+- Community & volunteering highlights
+- Hobbies bucket list
+- Dark/light theme with Catppuccin color palette
 
 ## Develop locally
-If you wish to run this site locally, clone it, and run:
 
 ```bash
-# install the dependencies
+# install dependencies
 yarn
 
-# run the build server with live reload
+# run dev server with live reload
 yarn start
 ```
 
-
-Alternatively, if you also wish to test things like the Netlify redirects which are specified in the netlify.toml file, you can use `netlify dev` to run the build.
+To test Netlify redirects locally:
 
 ```bash
-# install netlify dev as part of the Netlify CLI
+# install Netlify CLI
 npm install -g netlify-cli
 
-# run the build server with live reload and some Netlify sugar
+# run with Netlify features
 netlify dev
 ```
 
+## Tech Stack
 
+- **Static Site Generator:** 11ty (Eleventy)
+- **Templating:** Nunjucks, Markdown
+- **Styling:** PostCSS
+- **Hosting:** Netlify
+
+## Attribution
+
+Site structure and design inspired by [Rafael Conde's portfolio](https://rafa.design).
