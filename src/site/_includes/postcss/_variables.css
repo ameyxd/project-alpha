@@ -1,63 +1,47 @@
 /* ==========================================================================
    CSS Custom Properties (Variables)
    Amey Ambade's Personal Website
+
+   Color Palette: Catppuccin (https://catppuccin.com)
+   - Light Mode: Latte
+   - Dark Mode: Mocha
+   - Accents: Green & Teal
    ========================================================================== */
 
 :root {
   /* -------------------------------------------------------------------------
-     Accent Colors
-     Two-color accent system for cohesive design
+     Catppuccin Accent Colors (Green & Teal)
+     Using Latte variants for light mode
      ------------------------------------------------------------------------- */
-  --accent-primary: #2563eb;        /* Blue - professional, trustworthy */
-  --accent-primary-rgb: 37, 99, 235;
-  --accent-secondary: #7c3aed;      /* Purple - creative, unique */
-  --accent-secondary-rgb: 124, 58, 237;
-
-  /* Alternative accent palettes (uncomment to try)
-
-  Warm palette:
-  --accent-primary: #ea580c;
-  --accent-primary-rgb: 234, 88, 12;
-  --accent-secondary: #dc2626;
-  --accent-secondary-rgb: 220, 38, 38;
-
-  Green palette:
-  --accent-primary: #059669;
-  --accent-primary-rgb: 5, 150, 105;
-  --accent-secondary: #0891b2;
-  --accent-secondary-rgb: 8, 145, 178;
-
-  Monochrome palette:
-  --accent-primary: #374151;
-  --accent-primary-rgb: 55, 65, 81;
-  --accent-secondary: #6b7280;
-  --accent-secondary-rgb: 107, 114, 128;
-  */
+  --accent-primary: #40a02b;          /* Catppuccin Latte Green */
+  --accent-primary-rgb: 64, 160, 43;
+  --accent-secondary: #179299;        /* Catppuccin Latte Teal */
+  --accent-secondary-rgb: 23, 146, 153;
 
   /* -------------------------------------------------------------------------
-     Light Mode Colors (Default)
+     Catppuccin Latte (Light Mode - Default)
      ------------------------------------------------------------------------- */
-  --bg-primary: #fafafa;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #f4f4f5;
-  --bg-code: #f1f5f9;
+  --bg-primary: #eff1f5;              /* Base */
+  --bg-secondary: #e6e9ef;            /* Mantle */
+  --bg-tertiary: #ccd0da;             /* Surface0 */
+  --bg-code: #dce0e8;                 /* Crust */
 
-  --text-primary: #18181b;
-  --text-secondary: #52525b;
-  --text-tertiary: #a1a1aa;
-  --text-inverse: #fafafa;
+  --text-primary: #4c4f69;            /* Text */
+  --text-secondary: #5c5f77;          /* Subtext1 */
+  --text-tertiary: #7c7f93;           /* Overlay2 */
+  --text-inverse: #eff1f5;            /* Base (for dark backgrounds) */
 
-  --border-primary: #e4e4e7;
-  --border-secondary: #d4d4d8;
+  --border-primary: #bcc0cc;          /* Surface1 */
+  --border-secondary: #acb0be;        /* Surface2 */
 
   /* -------------------------------------------------------------------------
-     Shadows
+     Shadows (adjusted for Catppuccin)
      ------------------------------------------------------------------------- */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 1px 2px 0 rgba(76, 79, 105, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(76, 79, 105, 0.1), 0 2px 4px -2px rgba(76, 79, 105, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(76, 79, 105, 0.1), 0 4px 6px -4px rgba(76, 79, 105, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(76, 79, 105, 0.1), 0 8px 10px -6px rgba(76, 79, 105, 0.1);
+  --shadow-card: 0 4px 24px rgba(76, 79, 105, 0.08);
 
   /* -------------------------------------------------------------------------
      Typography
